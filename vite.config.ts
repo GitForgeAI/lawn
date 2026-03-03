@@ -12,15 +12,6 @@ export default defineConfig({
       srcDirectory: "app",
       spa: {
         enabled: true,
-        prerender: {
-          outputPath: "/_shell",
-          crawlLinks: false,
-        },
-      },
-      prerender: {
-        enabled: false,
-        autoStaticPathsDiscovery: false,
-        crawlLinks: false,
       },
     }),
     viteReact(),
