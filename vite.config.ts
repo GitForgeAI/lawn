@@ -12,25 +12,16 @@ export default defineConfig({
       srcDirectory: "app",
       spa: {
         enabled: true,
-        maskPath: "/mono",
         prerender: {
           outputPath: "/_shell",
           crawlLinks: false,
         },
       },
       prerender: {
-        enabled: true,
+        enabled: false,
         autoStaticPathsDiscovery: false,
         crawlLinks: false,
       },
-      pages: [
-        { path: "/" },
-        { path: "/compare/frameio" },
-        { path: "/compare/wipster" },
-        { path: "/for/video-editors" },
-        { path: "/for/agencies" },
-        { path: "/pricing" },
-      ],
     }),
     viteReact(),
   ],

@@ -18,20 +18,19 @@ export const Route = createRootRoute({
     meta: [
       { charSet: "utf-8" },
       { name: "viewport", content: "width=device-width, initial-scale=1" },
-      { title: "lawn — video review for creative teams" },
+      { title: "THR Review — video review for True Hand Roofing" },
       {
         name: "description",
         content:
-          "Video review and collaboration for creative teams. Frame-accurate comments, unlimited seats, $5/month flat. The open source Frame.io alternative.",
+          "True Hand Roofing video review. Frame-accurate comments, team collaboration, workflow tracking.",
       },
-      { property: "og:site_name", content: "lawn" },
-      { name: "twitter:site", content: "@theo" },
+      { property: "og:site_name", content: "THR Review" },
     ],
     links: [
       { rel: "stylesheet", href: appCss },
-      { rel: "icon", type: "image/svg+xml", href: "/grass-logo.svg?v=4" },
-      { rel: "icon", type: "image/x-icon", href: "/favicon.ico?v=4" },
-      { rel: "shortcut icon", href: "/favicon.ico?v=4" },
+      { rel: "icon", type: "image/webp", href: "/thr-icon.webp" },
+      { rel: "icon", type: "image/x-icon", href: "/favicon.ico" },
+      { rel: "shortcut icon", href: "/favicon.ico" },
       { rel: "preconnect", href: "https://stream.mux.com", crossOrigin: "anonymous" },
       { rel: "preconnect", href: "https://image.mux.com", crossOrigin: "anonymous" },
       { rel: "dns-prefetch", href: "//stream.mux.com" },
@@ -66,8 +65,10 @@ function RootComponent() {
 function AppShell({ children }: { children: ReactNode }) {
   const publishableKey = import.meta.env.VITE_CLERK_PUBLISHABLE_KEY;
 
-  if (!publishableKey) {
-    throw new Error("Missing VITE_CLERK_PUBLISHABLE_KEY");
+  // During SSR/prerender (build), skip Clerk — it validates the key format
+  // and we don't need auth for the shell HTML. Client-side JS hydrates with Clerk.
+  if (typeof window === "undefined" || !publishableKey) {
+    return <RootDocument>{children}</RootDocument>;
   }
 
   return (
@@ -81,7 +82,7 @@ function RootDocument({ children }: { children: ReactNode }) {
   const themeInitScript = `
     (() => {
       try {
-        const stored = localStorage.getItem("lawn-theme");
+        const stored = localStorage.getItem("thr-review-theme");
         if (stored === "light" || stored === "dark") {
           document.documentElement.setAttribute("data-theme", stored);
           return;

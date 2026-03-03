@@ -28,23 +28,7 @@ type DashboardProjectCardProps = {
   onOpen: () => void;
 };
 
-function formatTeamPlanLabel(
-  plan: string,
-  billingStatus?: string,
-  stripeSubscriptionId?: string,
-) {
-  if (!stripeSubscriptionId && billingStatus !== "active") {
-    return "Unpaid";
-  }
-
-  if (
-    billingStatus &&
-    billingStatus !== "active" &&
-    billingStatus !== "trialing" &&
-    billingStatus !== "past_due"
-  ) {
-    return "Unpaid";
-  }
+function formatTeamPlanLabel(plan: string) {
   if (plan === "pro" || plan === "team") return "Pro";
   return "Basic";
 }
@@ -154,11 +138,7 @@ export default function DashboardPage() {
                   <div className="flex items-center gap-3">
                     <h2 className="text-xl font-black text-[#1a1a1a]">{team.name}</h2>
                     <Badge variant="secondary">
-                      {formatTeamPlanLabel(
-                        team.plan,
-                        team.billingStatus,
-                        team.stripeSubscriptionId,
-                      )}
+                      {formatTeamPlanLabel(team.plan)}
                     </Badge>
                   </div>
                   <div className="flex items-center gap-4">
@@ -166,7 +146,7 @@ export default function DashboardPage() {
                       to={teamSettingsPath(team.slug)}
                       className="text-[#888] hover:text-[#1a1a1a] text-sm font-bold transition-colors"
                     >
-                      Billing
+                      Settings
                     </Link>
                     <Link
                       to={teamHomePath(team.slug)}

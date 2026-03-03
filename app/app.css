@@ -69,7 +69,7 @@
   --surface-muted: #d8d8d0;
 
   /* Text */
-  --foreground: #1a1a1a;
+  --foreground: #0f172a;
   --foreground-muted: #888888;
   --foreground-subtle: #aaaaaa;
   --foreground-inverse: #f0f0e8;
@@ -78,12 +78,12 @@
   --border: #1a1a1a;
   --border-subtle: #cccccc;
   --shadow-color: #1a1a1a;
-  --shadow-accent: rgba(45,90,45,1);
+  --shadow-accent: rgba(11,59,94,1);
 
-  /* Accent - forest green */
-  --accent: #2d5a2d;
-  --accent-hover: #3a6a3a;
-  --accent-light: #7cb87c;
+  /* Accent — True Blue */
+  --accent: #0b3b5e;
+  --accent-hover: #1e5a8a;
+  --accent-light: #eab308;
 
   /* Semantic colors */
   --destructive: #dc2626;
@@ -99,30 +99,30 @@
 }
 
 :root[data-theme="dark"] {
-  /* Core palette - deep olive/charcoal */
-  --background: #101410;
-  --background-alt: #e7ede4;
-  --surface: #171c17;
-  --surface-alt: #202720;
-  --surface-strong: #2a332b;
-  --surface-muted: #2b332b;
+  /* Core palette — dark navy/slate */
+  --background: #0c1220;
+  --background-alt: #e2e8f0;
+  --surface: #111827;
+  --surface-alt: #1e293b;
+  --surface-strong: #334155;
+  --surface-muted: #1e293b;
 
   /* Text */
-  --foreground: #e7ede4;
-  --foreground-muted: #9aa79b;
-  --foreground-subtle: #7e897f;
-  --foreground-inverse: #101410;
+  --foreground: #e2e8f0;
+  --foreground-muted: #94a3b8;
+  --foreground-subtle: #64748b;
+  --foreground-inverse: #0c1220;
 
   /* Borders */
-  --border: #e7ede4;
-  --border-subtle: #374038;
-  --shadow-color: #7cb87c;
-  --shadow-accent: #7cb87c;
+  --border: #e2e8f0;
+  --border-subtle: #334155;
+  --shadow-color: #eab308;
+  --shadow-accent: #eab308;
 
-  /* Accent - forest green lifted for dark backgrounds */
-  --accent: #7cb87c;
-  --accent-hover: #91c991;
-  --accent-light: #b8ddb8;
+  /* Accent — Premium Gold for dark backgrounds */
+  --accent: #eab308;
+  --accent-hover: #fbbf24;
+  --accent-light: #60a5fa;
 
   /* Semantic colors */
   --destructive: #f87171;
@@ -137,30 +137,30 @@
 
 @media (prefers-color-scheme: dark) {
   :root:not([data-theme="light"]) {
-    /* Core palette - deep olive/charcoal */
-    --background: #101410;
-    --background-alt: #e7ede4;
-    --surface: #171c17;
-    --surface-alt: #202720;
-    --surface-strong: #2a332b;
-    --surface-muted: #2b332b;
+    /* Core palette — dark navy/slate */
+    --background: #0c1220;
+    --background-alt: #e2e8f0;
+    --surface: #111827;
+    --surface-alt: #1e293b;
+    --surface-strong: #334155;
+    --surface-muted: #1e293b;
 
     /* Text */
-    --foreground: #e7ede4;
-    --foreground-muted: #9aa79b;
-    --foreground-subtle: #7e897f;
-    --foreground-inverse: #101410;
+    --foreground: #e2e8f0;
+    --foreground-muted: #94a3b8;
+    --foreground-subtle: #64748b;
+    --foreground-inverse: #0c1220;
 
     /* Borders */
-    --border: #e7ede4;
-    --border-subtle: #374038;
-    --shadow-color: #7cb87c;
-    --shadow-accent: #7cb87c;
+    --border: #e2e8f0;
+    --border-subtle: #334155;
+    --shadow-color: #eab308;
+    --shadow-accent: #eab308;
 
-    /* Accent - forest green lifted for dark backgrounds */
-    --accent: #7cb87c;
-    --accent-hover: #91c991;
-    --accent-light: #b8ddb8;
+    /* Accent — Premium Gold for dark backgrounds */
+    --accent: #eab308;
+    --accent-hover: #fbbf24;
+    --accent-light: #60a5fa;
 
     /* Semantic colors */
     --destructive: #f87171;

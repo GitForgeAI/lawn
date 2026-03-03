@@ -4,7 +4,6 @@ import { identityName, requireProjectAccess, requireVideoAccess } from "./auth";
 import { Id } from "./_generated/dataModel";
 import { generateUniqueToken } from "./security";
 import { resolveActiveShareGrant } from "./shareAccess";
-import { assertTeamCanStoreBytes } from "./billingHelpers";
 
 const workflowStatusValidator = v.union(
   v.literal("review"),
@@ -59,7 +58,6 @@ export const create = mutation({
   },
   handler: async (ctx, args) => {
     const { user, project } = await requireProjectAccess(ctx, args.projectId, "member");
-    await assertTeamCanStoreBytes(ctx, project.teamId, args.fileSize ?? 0);
     const publicId = await generatePublicId(ctx);
 
     const videoId = await ctx.db.insert("videos", {
@@ -317,10 +315,6 @@ export const reconcileUploadedObjectMetadata = internalMutation({
         : 0;
     const actualSize = Number.isFinite(args.fileSize) ? Math.max(0, args.fileSize) : 0;
     const sizeDelta = actualSize - declaredSize;
-
-    if (sizeDelta > 0) {
-      await assertTeamCanStoreBytes(ctx, project.teamId, sizeDelta);
-    }
 
     await ctx.db.patch(args.videoId, {
       fileSize: actualSize,

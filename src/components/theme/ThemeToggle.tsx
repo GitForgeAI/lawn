@@ -10,7 +10,7 @@ import {
   useState,
 } from "react";
 
-const THEME_STORAGE_KEY = "lawn-theme";
+const THEME_STORAGE_KEY = "thr-review-theme";
 
 type Theme = "light" | "dark";
 
