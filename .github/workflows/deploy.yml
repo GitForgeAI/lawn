@@ -3,10 +3,16 @@
 # =============================================================
 #
 # WHAT THIS DOES:
-# 1. Builds the Docker image (nginx SPA)
-# 2. Pushes to GitHub Container Registry (ghcr.io)
-# 3. SSHs into the VPS and pulls the new image
-# 4. Restarts the review container and runs health check
+# 1. Installs deps and builds the SPA with bun (on the runner)
+# 2. Builds a slim nginx Docker image with the pre-built assets
+# 3. Pushes to GitHub Container Registry (ghcr.io)
+# 4. SSHs into the VPS and pulls the new image
+# 5. Restarts the review container and runs health check
+#
+# WHY BUILD OUTSIDE DOCKER:
+# TanStack Start SPA mode prerenders a shell HTML by spinning up
+# a temporary SSR server. This doesn't work inside Docker build
+# (no localhost networking). Building on the runner avoids this.
 #
 # WHEN IT RUNS:
 # - Automatically when you push to thr-main
@@ -35,7 +41,7 @@ concurrency:
 
 jobs:
   # ===========================================================
-  # JOB 1: Build Docker image and push to GHCR
+  # JOB 1: Build SPA, package into Docker, push to GHCR
   # ===========================================================
   build-and-push:
     runs-on: ubuntu-latest
@@ -43,6 +49,23 @@ jobs:
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
+
+      - name: Set up bun
+        uses: oven-sh/setup-bun@v2
+
+      - name: Install dependencies
+        run: bun install --frozen-lockfile
+
+      - name: Build SPA
+        env:
+          VITE_CONVEX_URL: https://review-convex-api.truehandroofing.com
+          VITE_CLERK_PUBLISHABLE_KEY: ${{ secrets.REVIEW_CLERK_PUBLISHABLE_KEY }}
+        run: bun run build
+
+      - name: Verify build output
+        run: |
+          ls -la dist/client/
+          test -f dist/client/_shell.html && echo "_shell.html exists" || echo "WARNING: _shell.html missing"
 
       - name: Set up Docker Buildx
         uses: docker/setup-buildx-action@v3
@@ -63,9 +86,6 @@ jobs:
           tags: |
             ghcr.io/gitforgeai/thr-review:latest
             ghcr.io/gitforgeai/thr-review:${{ github.sha }}
-          build-args: |
-            VITE_CONVEX_URL=https://review-convex-api.truehandroofing.com
-            VITE_CLERK_PUBLISHABLE_KEY=${{ secrets.REVIEW_CLERK_PUBLISHABLE_KEY }}
           cache-from: type=gha
           cache-to: type=gha,mode=max
 
